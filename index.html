@@ -3,9 +3,48 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
-    <title>Hello world!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="index.css">
+
+    <script src="config.js" type="module">
+    </script>
+    <script src="dasetprocessor.js" type="module">
+    </script>
+    <script src="sourceprocessor.js" type="module">
+    </script>
+    <script src="articleprocessor.js" type="module">
+    </script>
+    <script src="index.js" type="module">
+    </script>
+
+    <title>News API Demo</title>
 </head>
-<body>
-    Hello world!
+<body id="body">
+    <div class="container">
+
+        <header class="header clearfix">
+            <nav>
+                <ul class="nav nav-pills float-right">
+                    <li class="nav-item">
+                        <a id="home" class="nav-link active" href="#">Home</a>
+                    </li>
+                </ul>
+            </nav>
+            <h3 class="text-muted">News API - Demo</h3>
+        </header>
+
+        <main>
+            <div id="data-container" class="container">
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>© Powered by News API</p>
+        </footer>
+
+    </div>
+
 </body>
 </html>
