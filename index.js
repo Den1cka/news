@@ -2,7 +2,7 @@
 import ArticleProcessor from './articleprocessor.js';
 
 function loadSource() {    
-    let source = new SourceProcessor("data-container");
+    const source = new SourceProcessor("data-container");
     source.onClick = (item) => {
         loadArticle(item.id);
     };
@@ -10,12 +10,12 @@ function loadSource() {
 }
 
 function loadArticle(sourceId) {    
-    let article = new ArticleProcessor("data-container", sourceId);
+    const article = new ArticleProcessor("data-container", sourceId);
     article.loadDataset();
 }
 
-let body = document.getElementById("body");
+const body = document.getElementById("body");
 body.onload = () => { loadSource(); };
 
-let home = document.getElementById("home");
+const home = document.getElementById("home");
 home.onclick = () => { loadSource(); };

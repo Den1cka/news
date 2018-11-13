@@ -1,11 +1,12 @@
 ﻿import DatasetProcessor from './dasetprocessor.js';
 import config from './config.js';
+const {apikey} = config;
 
 class SourceProcessor extends DatasetProcessor {
 
     constructor(container) {
         
-        let url = `https://newsapi.org/v2/sources?apiKey=${config.apikey}`;
+        const url = `https://newsapi.org/v2/sources?apiKey=${apikey}`;
         const loadingMessage = "Loading of the sources...";
         const exceptionMessage = "Unfortunately, we have gotten an exception during retrieving list of sources :(";
         
@@ -16,19 +17,26 @@ class SourceProcessor extends DatasetProcessor {
 
     displayDatasetItem(item) {
 
-        let string = `<div class="card"><div class="card-body"><h5 class="card-title">${item.name}</h5><p class="card-text">${item.description}</p><a id="${item.id}" class="btn btn-primary" href="#">See more..</a></div></div>`;
+        const string = `
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">${item.name}</h5>
+                    <p class="card-text">${item.description}</p>
+                    <a id="${item.id}" class="btn btn-primary" href="#">See more..</a>
+                </div>
+            </div>`;
         
-        let wrapper = document.createElement('div');
-        wrapper.innerHTML= string;
-        let card = wrapper.firstChild;
+        const wrapper = document.createElement('div');
+        wrapper.innerHTML = string;
+        const card = wrapper.firstElementChild;
 
         card.querySelector(`#${item.id}`).onclick = () => this.onClick(item);
         
         return card;
     }
 
-    loadDatasetFromJson(json) {
-        return json.sources;
+    loadDatasetFromJson({sources}) {
+        return sources;
     }
 }
 

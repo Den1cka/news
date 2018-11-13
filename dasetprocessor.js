@@ -9,7 +9,7 @@
 
     clearContainer() {
 
-        let container = document.getElementById(this.container);
+        const container = document.getElementById(this.container);
 
         while (container.hasChildNodes()) {
             container.removeChild(container.firstChild);
@@ -21,7 +21,10 @@
 
         this.clearContainer();
 
-        let alert = `<div class='alert alert-primary'>${this.loadingMessage}</div>`;
+        const alert = `
+            <div class='alert alert-primary'>
+                ${this.loadingMessage}
+            </div>`;
 
         document.getElementById(this.container).innerHTML = alert;
 
@@ -31,7 +34,10 @@
 
         this.clearContainer();
 
-        let alert = `<div class='alert alert-danger'>${this.exceptionMessage}</div>`;
+        const alert = `
+            <div class='alert alert-danger'>
+                ${this.exceptionMessage}
+            </div>`;
 
         document.getElementById(this.container).innerHTML = alert;
     }
@@ -40,12 +46,12 @@
 
         this.clearContainer();
 
-        let cards = document.createElement("div");
+        const cards = document.createElement("div");
         cards.classList.add("card-columns");
 
-        for (let item of dataset) {
+        for (const item of dataset) {
 
-            let card = this.displayDatasetItem(item);
+            const card = this.displayDatasetItem(item);
             cards.appendChild(card);
         }
 
@@ -54,12 +60,11 @@
     }
 
     displayDatasetItem(item) {
-        let empty = document.createTextNode("");
-        return empty;
+        throw "Function is abstract and not allowed for direct usage!"
     }
 
     loadDatasetFromJson(json) {
-        return json;
+        throw "Function is abstract and not allowed for direct usage!"
     }
 
     loadDataset() {
@@ -67,11 +72,9 @@
         this.displayLoading();
 
         fetch(this.url)
-            .then((response) => {
-                return response.json();
-            })
+            .then(response => response.json())
                 .then((json) => {
-                    let dataset = this.loadDatasetFromJson(json);
+                    const dataset = this.loadDatasetFromJson(json);
                     this.displayDataset(dataset);
                 })
             .catch(() => {
