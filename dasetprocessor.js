@@ -1,87 +1,77 @@
 ﻿class DatasetProcessor {
+  constructor (container, url, loadingMessage, exceptionMessage) {
+    this.container = container
+    this.url = url
+    this.loadingMessage = loadingMessage
+    this.exceptionMessage = exceptionMessage
+  }
 
-    constructor(container, url, loadingMessage, exceptionMessage) {
-        this.container = container;
-        this.url = url;
-        this.loadingMessage = loadingMessage;
-        this.exceptionMessage = exceptionMessage;
+  clearContainer () {
+    const container = document.getElementById(this.container)
+
+    while (container.hasChildNodes()) {
+      container.removeChild(container.firstChild)
     }
+  }
 
-    clearContainer() {
+  displayLoading () {
+    this.clearContainer()
 
-        const container = document.getElementById(this.container);
-
-        while (container.hasChildNodes()) {
-            container.removeChild(container.firstChild);
-        }
-
-    }
-
-    displayLoading() {
-
-        this.clearContainer();
-
-        const alert = `
+    const alert = `
             <div class='alert alert-primary'>
                 ${this.loadingMessage}
-            </div>`;
+            </div>`
 
-        document.getElementById(this.container).innerHTML = alert;
+    document.getElementById(this.container).innerHTML = alert
+  }
 
-    }
+  displayException () {
+    this.clearContainer()
 
-    displayException() {
-
-        this.clearContainer();
-
-        const alert = `
+    const alert = `
             <div class='alert alert-danger'>
                 ${this.exceptionMessage}
-            </div>`;
+            </div>`
 
-        document.getElementById(this.container).innerHTML = alert;
+    document.getElementById(this.container).innerHTML = alert
+  }
+
+  displayDataset (dataset) {
+    this.clearContainer()
+
+    const cards = document.createElement('div')
+    cards.classList.add('card-columns')
+
+    for (const item of dataset) {
+      const card = this.displayDatasetItem(item)
+      cards.appendChild(card)
     }
 
-    displayDataset(dataset) {
+    document.getElementById(this.container).appendChild(cards)
+  }
 
-        this.clearContainer();
+  displayDatasetItem (item) {
+    throw new Error('Function is abstract and not allowed for direct usage!')
+  }
 
-        const cards = document.createElement("div");
-        cards.classList.add("card-columns");
+  loadDatasetFromJson (json) {
+    throw new Error('Function is abstract and not allowed for direct usage!')
+  }
 
-        for (const item of dataset) {
+  loadDataset () {
+    this.displayLoading()
 
-            const card = this.displayDatasetItem(item);
-            cards.appendChild(card);
-        }
-
-        document.getElementById(this.container).appendChild(cards);
-
-    }
-
-    displayDatasetItem(item) {
-        throw "Function is abstract and not allowed for direct usage!"
-    }
-
-    loadDatasetFromJson(json) {
-        throw "Function is abstract and not allowed for direct usage!"
-    }
-
-    loadDataset() {
-
-        this.displayLoading();
-
-        fetch(this.url)
-            .then(response => response.json())
-                .then((json) => {
-                    const dataset = this.loadDatasetFromJson(json);
-                    this.displayDataset(dataset);
-                })
-            .catch(() => {
-                this.displayException();
-            });
-
-    }
+    // eslint-disable-next-line no-undef
+    fetch(this.url)
+      .then(response => response.json())
+      .then((json) => {
+        const dataset = this.loadDatasetFromJson(json)
+        this.displayDataset(dataset)
+      })
+      .catch(() => {
+        this.displayException()
+      })
+  }
 }
 
-export default DatasetProcessor;
+export default DatasetProcessor
