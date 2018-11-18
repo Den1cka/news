@@ -1,4 +1,4 @@
-class InterfaceService {
+class AlertService {
     constructor(container) {
         this.container = container;
     }
@@ -12,26 +12,31 @@ class InterfaceService {
     }
 
     displayLoading(loadingMessage) {
-        this.clearContainer();
-
         const alert = `
             <div class='alert alert-primary'>
                 ${loadingMessage}
             </div>`;
 
-        document.getElementById(this.container).innerHTML = alert;
+        document.getElementById(this.container).innerHTML += alert;
     }
 
     displayException(exceptionMessage) {
-        this.clearContainer();
-
         const alert = `
             <div class='alert alert-danger'>
                 ${exceptionMessage}
             </div>`;
 
-        document.getElementById(this.container).innerHTML = alert;
+        document.getElementById(this.container).innerHTML += alert;
+    }
+
+    displayCompletion(completionMessage) {
+        const alert = `
+            <div class='alert alert-success'>
+                ${completionMessage}
+            </div>`;
+
+        document.getElementById(this.container).innerHTML += alert;
     }
 }
 
-export default InterfaceService;
+export default AlertService;

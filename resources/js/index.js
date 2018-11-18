@@ -5,12 +5,12 @@ import config from './config.js';
 const { apikey } = config;
 
 function loadArticle(sourceId) {
-    const article = new ArticleComponent(`data-container`, apikey, sourceId);
+    const article = new ArticleComponent(`data-container`, `alert-container`, apikey, sourceId);
     article.loadArticles();
 }
 
 function loadSource() {
-    const source = new SourceComponent(`data-container`, apikey);
+    const source = new SourceComponent(`data-container`, `alert-container`, apikey);
     source.onClick = (item) => {
         loadArticle(item.id);
     };

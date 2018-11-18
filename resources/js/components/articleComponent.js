@@ -1,40 +1,44 @@
 import DataService from '../services/dataService.js';
-import InterfaceService from '../services/interfaceService.js';
+import AlertService from '../services/alertService.js';
 
 class ArticleComponent {
-    constructor(container, apikey, sourceId) {
-        this.container = container;
-        this.interfaceService = new InterfaceService(container);
+    constructor(datacontainer, alertcontainer, apikey, sourceId) {
+        this.datacontainer = datacontainer;
+        this.alertService = new AlertService(alertcontainer);
         this.dataService = new DataService(apikey);
         this.sourceId = sourceId;
         this.loadingMessage = `Loading of the articles...`;
         this.exceptionMessage = `Unfortunately, we have gotten an exception during retrieving list of articles :(`;
+        this.completionMessage = `Loading of the articles has been completed!`;
     }
 
-    loadArticles() {
-        this.interfaceService.displayLoading(this.loadingMessage);
+    clearContainer() {
+        const container = document.getElementById(this.datacontainer);
 
-        this.dataService.getArticles(this.sourceId)
-            .then((articles) => {
-                this.displayArticles(articles);
-            })
-            .catch(() => {
-                this.interfaceService.displayException(this.exceptionMessage);
-            });
+        while (container.hasChildNodes()) {
+            container.removeChild(container.firstChild);
+        }
     }
 
-    displayArticles(articles) {
-        this.interfaceService.clearContainer();
+    async loadArticles() {
+        this.clearContainer();
+        this.alertService.clearContainer();
+        this.alertService.displayLoading(this.loadingMessage);
 
         const cards = document.createElement(`div`);
         cards.classList.add(`card-columns`);
+        document.getElementById(this.datacontainer).appendChild(cards);
 
-        for (const article of articles) {
-            const card = this.renderArticle(article);
-            cards.appendChild(card);
+        try {
+            for await (const article of this.dataService.getArticles(this.sourceId)) {
+                const card = this.renderArticle(article);
+                cards.appendChild(card);
+            }
+        } catch (error) {
+            this.alertService.displayException(this.exceptionMessage);
         }
 
-        document.getElementById(this.container).appendChild(cards);
+        this.alertService.displayCompletion(this.completionMessage);
     }
 
     // This should be method of the class

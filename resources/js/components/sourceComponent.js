@@ -1,30 +1,42 @@
 import DataService from '../services/dataService.js';
-import InterfaceService from '../services/interfaceService.js';
+import AlertService from '../services/alertService.js';
 
 class SourceComponent {
-    constructor(container, apikey) {
-        this.container = container;
-        this.interfaceService = new InterfaceService(container);
+    constructor(datacontainer, alertcontainer, apikey) {
+        this.datacontainer = datacontainer;
+        this.alertService = new AlertService(alertcontainer);
         this.dataService = new DataService(apikey);
         this.loadingMessage = `Loading of the sources...`;
         this.exceptionMessage = `Unfortunately, we have gotten an exception during retrieving list of sources :(`;
+        this.completionMessage = `Loading of the sourses has been completed!`;
+    }
+
+    clearContainer() {
+        const container = document.getElementById(this.datacontainer);
+
+        while (container.hasChildNodes()) {
+            container.removeChild(container.firstChild);
+        }
     }
 
     loadSources() {
-        this.interfaceService.displayLoading(this.loadingMessage);
+        this.clearContainer();
+        this.alertService.clearContainer();
+        this.alertService.displayLoading(this.loadingMessage);
 
         this.dataService.getSources()
             .then((sources) => {
                 this.displaySources(sources);
             })
             .catch(() => {
-                this.interfaceService.displayException(this.exceptionMessage);
+                this.alertService.displayException(this.exceptionMessage);
+            })
+            .finally(() => {
+                this.alertService.displayCompletion(this.completionMessage);
             });
     }
 
     displaySources(sources) {
-        this.interfaceService.clearContainer();
-
         const cards = document.createElement(`div`);
         cards.classList.add(`card-columns`);
 
@@ -33,7 +45,7 @@ class SourceComponent {
             cards.appendChild(card);
         }
 
-        document.getElementById(this.container).appendChild(cards);
+        document.getElementById(this.datacontainer).appendChild(cards);
     }
 
     renderSource(source) {

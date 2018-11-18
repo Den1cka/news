@@ -1,26 +1,31 @@
 ﻿<!DOCTYPE html>
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
     <link rel="stylesheet" href="./resources/css/index.css">
 
+    <script src="./resources/js/services/dataService.js" type="module">
+    </script>
+    <script src="./resources/js/services/alertService.js" type="module">
+    </script>
+    <script src="./resources/js/components/sourceComponent.js" type="module">
+    </script>
+    <script src="./resources/js/components/articleComponent.js" type="module">
+    </script>
     <script src="./resources/js/config.js" type="module">
-    </script>
-    <script src="./resources/js/dasetprocessor.js" type="module">
-    </script>
-    <script src="./resources/js/sourceprocessor.js" type="module">
-    </script>
-    <script src="./resources/js/articleprocessor.js" type="module">
     </script>
     <script src="./resources/js/index.js" type="module">
     </script>
 
     <title>News API Demo</title>
 </head>
+
 <body id="body">
     <div class="container">
 
@@ -36,6 +41,8 @@
         </header>
 
         <main>
+            <div id="alert-container" class="container">
+            </div>
             <div id="data-container" class="container">
             </div>
         </main>
@@ -47,4 +54,5 @@
     </div>
 
 </body>
+
 </html>
