@@ -12,10 +12,14 @@ class ArticleProcessor extends DatasetProcessor {
         super(container, url, loadingMessage, exceptionMessage);
     }
 
+    // This function is called from base class, it cannot be static.
+    // eslint-disable-next-line class-methods-use-this
     loadDatasetFromJson({ articles }) {
         return articles;
     }
 
+    // This function is called from base class, it cannot be static.
+    // eslint-disable-next-line class-methods-use-this
     displayDatasetItem(item) {
         const string = `
             <div class="card">

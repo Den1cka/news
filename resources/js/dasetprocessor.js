@@ -50,12 +50,16 @@
         document.getElementById(this.container).appendChild(cards);
     }
 
-    displayDatasetItem(item) {
-        throw `Function is abstract and not allowed for direct usage!`;
+    // This function is called from base class, it cannot be static.
+    // eslint-disable-next-line class-methods-use-this
+    displayDatasetItem() {
+        throw new Error(`Function is abstract and not allowed for direct usage!`);
     }
 
-    loadDatasetFromJson(json) {
-        throw `Function is abstract and not allowed for direct usage!`;
+    // This function is called from base class, it cannot be static.
+    // eslint-disable-next-line class-methods-use-this
+    loadDatasetFromJson() {
+        throw new Error(`Function is abstract and not allowed for direct usage!`);
     }
 
     loadDataset() {

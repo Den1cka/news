@@ -10,8 +10,6 @@ class SourceProcessor extends DatasetProcessor {
         const exceptionMessage = `Unfortunately, we have gotten an exception during retrieving list of sources :(`;
 
         super(container, url, loadingMessage, exceptionMessage);
-
-        this.onClick = (item) => {};
     }
 
     displayDatasetItem(item) {
@@ -28,11 +26,15 @@ class SourceProcessor extends DatasetProcessor {
         wrapper.innerHTML = string;
         const card = wrapper.firstElementChild;
 
-        card.querySelector(`#${item.id}`).onclick = () => this.onClick(item);
+        if (this.onClick) {
+            card.querySelector(`#${item.id}`).onclick = () => this.onClick(item);
+        }
 
         return card;
     }
 
+    // This function is called from base class, it cannot be static.
+    // eslint-disable-next-line class-methods-use-this
     loadDatasetFromJson({ sources }) {
         return sources;
     }
