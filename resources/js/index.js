@@ -1,17 +1,20 @@
-﻿import SourceProcessor from './sourceprocessor.js';
-import ArticleProcessor from './articleprocessor.js';
+﻿import SourceComponent from './components/sourceComponent.js';
+import ArticleComponent from './components/articleComponent.js';
+import config from './config.js';
+
+const { apikey } = config;
 
 function loadArticle(sourceId) {
-    const article = new ArticleProcessor(`data-container`, sourceId);
-    article.loadDataset();
+    const article = new ArticleComponent(`data-container`, apikey, sourceId);
+    article.loadArticles();
 }
 
 function loadSource() {
-    const source = new SourceProcessor(`data-container`);
+    const source = new SourceComponent(`data-container`, apikey);
     source.onClick = (item) => {
         loadArticle(item.id);
     };
-    source.loadDataset();
+    source.loadSources();
 }
 
 const body = document.getElementById(`body`);
