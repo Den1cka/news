@@ -1,5 +1,4 @@
 ﻿class DatasetProcessor {
-
     constructor(container, url, loadingMessage, exceptionMessage) {
         this.container = container;
         this.url = url;
@@ -8,17 +7,14 @@
     }
 
     clearContainer() {
-
         const container = document.getElementById(this.container);
 
         while (container.hasChildNodes()) {
             container.removeChild(container.firstChild);
         }
-
     }
 
     displayLoading() {
-
         this.clearContainer();
 
         const alert = `
@@ -27,11 +23,9 @@
             </div>`;
 
         document.getElementById(this.container).innerHTML = alert;
-
     }
 
     displayException() {
-
         this.clearContainer();
 
         const alert = `
@@ -43,44 +37,39 @@
     }
 
     displayDataset(dataset) {
-
         this.clearContainer();
 
-        const cards = document.createElement("div");
-        cards.classList.add("card-columns");
+        const cards = document.createElement(`div`);
+        cards.classList.add(`card-columns`);
 
         for (const item of dataset) {
-
             const card = this.displayDatasetItem(item);
             cards.appendChild(card);
         }
 
         document.getElementById(this.container).appendChild(cards);
-
     }
 
     displayDatasetItem(item) {
-        throw "Function is abstract and not allowed for direct usage!"
+        throw `Function is abstract and not allowed for direct usage!`;
     }
 
     loadDatasetFromJson(json) {
-        throw "Function is abstract and not allowed for direct usage!"
+        throw `Function is abstract and not allowed for direct usage!`;
     }
 
     loadDataset() {
-
         this.displayLoading();
 
         fetch(this.url)
             .then(response => response.json())
-                .then((json) => {
-                    const dataset = this.loadDatasetFromJson(json);
-                    this.displayDataset(dataset);
-                })
+            .then((json) => {
+                const dataset = this.loadDatasetFromJson(json);
+                this.displayDataset(dataset);
+            })
             .catch(() => {
                 this.displayException();
             });
-
     }
 }
 
