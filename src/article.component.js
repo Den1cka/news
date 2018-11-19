@@ -1,5 +1,5 @@
-import DataService from '../services/dataService.js';
-import AlertService from '../services/alertService.js';
+import DataService from './data.service.js';
+import AlertService from './alert.service.js';
 
 class ArticleComponent {
     constructor(datacontainer, alertcontainer, apikey, sourceId) {
@@ -20,7 +20,7 @@ class ArticleComponent {
         }
     }
 
-    async loadArticles() {
+    async loadArticlesAsync() {
         this.clearContainer();
         this.alertService.clearContainer();
         this.alertService.displayLoading(this.loadingMessage);
@@ -30,7 +30,7 @@ class ArticleComponent {
         document.getElementById(this.datacontainer).appendChild(cards);
 
         try {
-            for await (const article of this.dataService.getArticles(this.sourceId)) {
+            for await (const article of this.dataService.getArticlesAsync(this.sourceId)) {
                 const card = this.renderArticle(article);
                 cards.appendChild(card);
             }

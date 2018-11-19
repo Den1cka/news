@@ -9,6 +9,7 @@
                         "ie >= 11"
                     ]
                 },
+                "modules": "umd",
                 "useBuiltIns": "usage"
             }
         ]

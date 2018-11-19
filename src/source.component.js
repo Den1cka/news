@@ -1,5 +1,5 @@
-import DataService from '../services/dataService.js';
-import AlertService from '../services/alertService.js';
+import DataService from './data.service.js';
+import AlertService from './alert.service.js';
 
 class SourceComponent {
     constructor(datacontainer, alertcontainer, apikey) {

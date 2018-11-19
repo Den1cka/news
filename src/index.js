@@ -1,12 +1,12 @@
-﻿import SourceComponent from './components/sourceComponent.js';
-import ArticleComponent from './components/articleComponent.js';
+﻿import SourceComponent from './source.component.js';
+import ArticleComponent from './article.component.js';
 import config from './config.js';
 
 const { apikey } = config;
 
 function loadArticle(sourceId) {
     const article = new ArticleComponent(`data-container`, `alert-container`, apikey, sourceId);
-    article.loadArticles();
+    article.loadArticlesAsync();
 }
 
 function loadSource() {
