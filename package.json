@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build-babel": "babel resources --out-file ./bin/bundle.js",
+    "build-webpack": "webpack --config webpack.config.js",
+    "watch-babel": "babel resources --watch --out-file ./bin/bundle.js",
+    "watch-webpack": "webpack --watch"
   },
   "repository": {
     "type": "git",
@@ -17,8 +20,16 @@
   },
   "homepage": "https://github.com/Den1cka/news#readme",
   "devDependencies": {
+    "@babel/cli": "^7.1.5",
+    "@babel/core": "^7.1.6",
+    "@babel/polyfill": "^7.0.0",
+    "@babel/preset-env": "^7.1.6",
+    "babel-loader": "^8.0.4",
     "eslint": "^5.9.0",
     "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.14.0"
+    "eslint-plugin-import": "^2.14.0",
+    "webpack": "^4.25.1",
+    "webpack-cli": "^3.1.2",
+    "whatwg-fetch": "^3.0.0"
   }
 }
