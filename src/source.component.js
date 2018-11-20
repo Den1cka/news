@@ -1,14 +1,14 @@
-import DataService from './data.service.js';
-import AlertService from './alert.service.js';
+import DataService from "./data.service.js";
+import AlertService from "./alert.service.js";
 
 class SourceComponent {
     constructor(datacontainer, alertcontainer, apikey) {
         this.datacontainer = datacontainer;
         this.alertService = new AlertService(alertcontainer);
         this.dataService = new DataService(apikey);
-        this.loadingMessage = `Loading of the sources...`;
-        this.exceptionMessage = `Unfortunately, we have gotten an exception during retrieving list of sources :(`;
-        this.completionMessage = `Loading of the sourses has been completed!`;
+        this.loadingMessage = "Loading of the sources...";
+        this.exceptionMessage = "Unfortunately, we have gotten an exception during retrieving list of sources :(";
+        this.completionMessage = "Loading of the sourses has been completed!";
     }
 
     clearContainer() {
@@ -37,8 +37,8 @@ class SourceComponent {
     }
 
     displaySources(sources) {
-        const cards = document.createElement(`div`);
-        cards.classList.add(`card-columns`);
+        const cards = document.createElement("div");
+        cards.classList.add("card-columns");
 
         for (const source of sources) {
             const card = this.renderSource(source);
@@ -58,7 +58,7 @@ class SourceComponent {
                 </div>
             </div>`;
 
-        const wrapper = document.createElement(`div`);
+        const wrapper = document.createElement("div");
         wrapper.innerHTML = string;
         const card = wrapper.firstElementChild;
 

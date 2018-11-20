@@ -10,7 +10,7 @@
         ],
         "quotes": [
             "error",
-            "backtick"
+            "double"
         ],
         "indent": [
             "error",
