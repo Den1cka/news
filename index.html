@@ -1,26 +1,27 @@
 ﻿<!DOCTYPE html>
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="./index.css">
 
-    <script src="config.js" type="module">
-    </script>
-    <script src="dasetprocessor.js" type="module">
-    </script>
-    <script src="sourceprocessor.js" type="module">
-    </script>
-    <script src="articleprocessor.js" type="module">
-    </script>
-    <script src="index.js" type="module">
-    </script>
+    <script src="./node_modules/whatwg-fetch/dist/fetch.umd.js"></script>
+    <script src="./node_modules/@babel/polyfill/dist/polyfill.js"></script>
+    <script src="./dist/config.js"></script>
+    <script src="./dist/data.service.js"></script>
+    <script src="./dist/alert.service.js"></script>
+    <script src="./dist/article.component.js"></script>
+    <script src="./dist/source.component.js"></script>
+
 
     <title>News API Demo</title>
 </head>
+
 <body id="body">
     <div class="container">
 
@@ -36,6 +37,8 @@
         </header>
 
         <main>
+            <div id="alert-container" class="container">
+            </div>
             <div id="data-container" class="container">
             </div>
         </main>
@@ -46,5 +49,8 @@
 
     </div>
 
+    <script src="./dist/index.js"></script>
+
 </body>
+
 </html>
