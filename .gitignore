@@ -1,2 +1,18 @@
 # Dependency directories
-node_modules/
+node_modules/*
+
+# Allow "fetch.umd.js"
+!node_modules/whatwg-fetch/
+node_modules/whatwg-fetch/*
+!node_modules/whatwg-fetch/dist/
+node_modules/whatwg-fetch/dist/*
+!node_modules/whatwg-fetch/dist/fetch.umd.js
+
+# Allow "polyfill.js"
+!node_modules/@babel/
+node_modules/@babel/*
+!node_modules/@babel/polyfill/
+node_modules/@babel/polyfill/*
+!node_modules/@babel/polyfill/dist/
+node_modules/@babel/polyfill/dist/*
+!node_modules/@babel/polyfill/dist/polyfill.js
