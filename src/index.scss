@@ -1,27 +1,29 @@
-﻿body {
+@import "~bootstrap/scss/bootstrap";
+
+body {
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
-}
-
-.header {
+  }
+  
+  .header {
     padding-bottom: 1rem;
     border-bottom: .05rem solid #e5e5e5;
     margin-bottom: 2rem;
-}
-
-.footer {
+  }
+  
+  .footer {
     padding-top: 1.5rem;
     color: #777;
     border-top: .05rem solid #e5e5e5;
     margin-top: 2rem;
-}
-
-.card-columns {
+  }
+  
+  .card-columns {
     column-count: 1;
-}
-
-@media (min-width: 48rem) {
+  }
+  
+  @media (min-width: 48rem) {
     .container {
-        max-width: 46rem;
+      max-width: 46rem;
     }
-}
+  }

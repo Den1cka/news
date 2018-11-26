@@ -1,0 +1,14 @@
+﻿{
+    "ApiSettings": {
+        "ApiKey": "774e60a37bd041c182c26a37eead0edf"
+    },
+    "DataSettings": {
+        "AmountOfArticles": 10
+    },
+    "Version": 1,
+    "DatesOfChanges": [
+        "2015",
+        "2016",
+        "2018"
+    ]
+}
