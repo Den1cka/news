@@ -1,12 +1,14 @@
+/* eslint-disable global-require */
+/* eslint-disable import/no-extraneous-dependencies */
 const webpack = require("webpack");
-const precss = require("precss");
-const autoprefixer = require("autoprefixer");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { resolve } = require("path");
 
 module.exports = {
     mode: "development",
     entry: ["whatwg-fetch", "./src/index.js", "./src/sample.json"],
     output: {
-        path: `${__dirname}/dist/`,
+        path: resolve(__dirname, "dist"),
         filename: "[name].bundle.js",
         chunkFilename: "[name].bundle.js",
         publicPath: "./dist/",
@@ -25,8 +27,8 @@ module.exports = {
                     options: {
                         plugins() {
                             return [
-                                precss,
-                                autoprefixer,
+                                require("precss"),
+                                require("autoprefixer"),
                             ];
                         },
                     },
@@ -50,15 +52,19 @@ module.exports = {
                     options: {
                         name: "[name].[ext]",
                     },
-                }, `${__dirname}/sample-loader.js`],
+                }, resolve(__dirname, "sample-loader.js")],
             },
         ],
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
+        new HtmlWebpackPlugin({
+            template: "./src/index.html",
+            filename: "../index.html",
+        }),
     ],
     devServer: {
-        contentBase: [__dirname, `${__dirname}/dist/`],
+        contentBase: [__dirname, resolve(__dirname, "dist")],
         publicPath: "http://localhost:8080/dist/",
         hot: true,
     },

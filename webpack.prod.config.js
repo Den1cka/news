@@ -1,12 +1,14 @@
+/* eslint-disable global-require */
+/* eslint-disable import/no-extraneous-dependencies */
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
-const precss = require("precss");
-const autoprefixer = require("autoprefixer");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { resolve } = require("path");
 
 module.exports = {
     mode: "production",
     entry: ["whatwg-fetch", "./src/index.js"],
     output: {
-        path: `${__dirname}/dist/`,
+        path: resolve(__dirname, "dist"),
         filename: "[name].bundle.js",
         chunkFilename: "[name].bundle.js",
         publicPath: "./dist/",
@@ -25,8 +27,8 @@ module.exports = {
                     options: {
                         plugins() {
                             return [
-                                precss,
-                                autoprefixer,
+                                require("precss"),
+                                require("autoprefixer"),
                             ];
                         },
                     },
@@ -47,4 +49,10 @@ module.exports = {
     optimization: {
         minimizer: [new UglifyJsPlugin()],
     },
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: "./src/index.html",
+            filename: "../index.html",
+        }),
+    ],
 };
