@@ -2,6 +2,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { resolve } = require("path");
 
 module.exports = {
@@ -22,7 +23,7 @@ module.exports = {
             },
             {
                 test: /\.scss$/,
-                use: ["style-loader", "css-loader", {
+                use: [MiniCssExtractPlugin.loader, "css-loader", {
                     loader: "postcss-loader",
                     options: {
                         plugins() {
@@ -53,6 +54,10 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: "./src/index.html",
             filename: "../index.html",
+        }),
+        new MiniCssExtractPlugin({
+            filename: "[name].css",
+            chunkFilename: "[name].css",
         }),
     ],
 };

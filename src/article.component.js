@@ -2,8 +2,9 @@ import DataService from "./data.service.js";
 import AlertService from "./alert.service.js";
 
 class ArticleComponent {
-    constructor(datacontainer, alertcontainer, apikey, sourceId) {
+    constructor(datacontainer, alertcontainer, exceptioncontainer, apikey, sourceId) {
         this.datacontainer = datacontainer;
+        this.exceptioncontainer = exceptioncontainer;
         this.alertService = new AlertService(alertcontainer);
         this.dataService = new DataService(apikey);
         this.sourceId = sourceId;
@@ -36,6 +37,13 @@ class ArticleComponent {
             }
         } catch (error) {
             this.alertService.displayException(this.exceptionMessage);
+
+            import(/* webpackChunkName: "exception.service" */ "./exception.service.js")
+                .then(({ default: ExceptionService }) => {
+                    // eslint-disable-next-line max-len
+                    const service = new ExceptionService(this.exceptioncontainer);
+                    service.displayPopup(this.exceptionMessage);
+                });
         }
 
         this.alertService.displayCompletion(this.completionMessage);
