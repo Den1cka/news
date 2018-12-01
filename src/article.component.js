@@ -30,7 +30,7 @@ class ArticleComponent {
         document.getElementById(this.datacontainer).appendChild(cards);
 
         try {
-            for await (const article of this.dataService.getArticlesAsync(this.sourceId)) {
+            for await (const article of this.dataService.getArticleGeneratorAsync(this.sourceId)) {
                 const card = this.renderArticle(article);
                 cards.appendChild(card);
             }
