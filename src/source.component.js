@@ -2,9 +2,8 @@ import DataService from "./data.service.js";
 import AlertService from "./alert.service.js";
 
 class SourceComponent {
-    constructor(datacontainer, alertcontainer, exceptioncontainer, apikey) {
+    constructor(datacontainer, alertcontainer, apikey) {
         this.datacontainer = datacontainer;
-        this.exceptioncontainer = exceptioncontainer;
         this.alertService = new AlertService(alertcontainer);
         this.dataService = new DataService(apikey);
         this.loadingMessage = "Loading of the sources...";
@@ -34,7 +33,7 @@ class SourceComponent {
 
                 import(/* webpackChunkName: "exception.service" */ "./exception.service.js")
                     .then(({ default: ExceptionService }) => {
-                        const service = new ExceptionService(this.exceptioncontainer);
+                        const service = new ExceptionService();
                         service.displayPopup(this.exceptionMessage);
                     });
             })

@@ -3,12 +3,12 @@ import "./exception.scss";
 class ExceptionService {
     static instance;
 
-    constructor(container) {
+    constructor() {
         if (ExceptionService.instance) {
             return ExceptionService.instance;
         }
 
-        this.container = container;
+        this.container = "exception-container";
         ExceptionService.instance = this;
     }
 
