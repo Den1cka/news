@@ -1,14 +1,41 @@
-import DataService from "./data.service.js";
-import AlertService from "./alert.service.js";
+import EventHandler from "./eventhandler.js";
 
-class SourceComponent {
-    constructor(datacontainer, alertcontainer, apikey) {
+class SourceView {
+    constructor(sourceModel, datacontainer, alertService) {
+        this.onClick = new EventHandler(this);
+
+        this.sourceModel = sourceModel;
         this.datacontainer = datacontainer;
-        this.alertService = new AlertService(alertcontainer);
-        this.dataService = new DataService(apikey);
+
+        this.alertService = alertService;
+
         this.loadingMessage = "Loading of the sources...";
         this.exceptionMessage = "Unfortunately, we have gotten an exception during retrieving list of sources :(";
         this.completionMessage = "Loading of the sourses has been completed!";
+
+        this.sourceModel.onGetDefaultBefore.attach(() => {
+            this.clearContainer();
+            this.alertService.clearContainer();
+            this.alertService.displayLoading(this.loadingMessage);
+        });
+
+        this.sourceModel.onGetDefault.attach((sender, args) => {
+            this.displaySources(args);
+        });
+
+        this.sourceModel.onGetDefaultException.attach(() => {
+            this.alertService.displayException(this.exceptionMessage);
+
+            import(/* webpackChunkName: "exception.service" */ "./exception.service.js")
+                .then(({ default: ExceptionService }) => {
+                    const service = new ExceptionService();
+                    service.displayPopup(this.exceptionMessage);
+                });
+        });
+
+        this.sourceModel.onGetDefaultAfter.attach(() => {
+            this.alertService.displayCompletion(this.completionMessage);
+        });
     }
 
     clearContainer() {
@@ -17,29 +44,6 @@ class SourceComponent {
         while (container.hasChildNodes()) {
             container.removeChild(container.firstChild);
         }
-    }
-
-    loadSources() {
-        this.clearContainer();
-        this.alertService.clearContainer();
-        this.alertService.displayLoading(this.loadingMessage);
-
-        this.dataService.getSources()
-            .then((sources) => {
-                this.displaySources(sources);
-            })
-            .catch(() => {
-                this.alertService.displayException(this.exceptionMessage);
-
-                import(/* webpackChunkName: "exception.service" */ "./exception.service.js")
-                    .then(({ default: ExceptionService }) => {
-                        const service = new ExceptionService();
-                        service.displayPopup(this.exceptionMessage);
-                    });
-            })
-            .finally(() => {
-                this.alertService.displayCompletion(this.completionMessage);
-            });
     }
 
     displaySources(sources) {
@@ -68,12 +72,10 @@ class SourceComponent {
         wrapper.innerHTML = string;
         const card = wrapper.firstElementChild;
 
-        if (this.onClick) {
-            card.querySelector(`#${source.id}`).onclick = () => this.onClick(source);
-        }
+        card.querySelector(`#${source.id}`).onclick = () => this.onClick.notify(source);
 
         return card;
     }
 }
 
-export default SourceComponent;
+export default SourceView;
