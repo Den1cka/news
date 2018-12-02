@@ -1,14 +1,14 @@
-class Api {
-    convert = function convert(object) {
-        const string = [];
-        for (const property in object) {
-            if (Object.prototype.hasOwnProperty.call(object, property)) {
-                string.push(`${encodeURIComponent(property)}=${encodeURIComponent(object[property])}`);
-            }
+const convert = function convert(object) {
+    const string = [];
+    for (const property in object) {
+        if (Object.prototype.hasOwnProperty.call(object, property)) {
+            string.push(`${encodeURIComponent(property)}=${encodeURIComponent(object[property])}`);
         }
-        return string.join("&");
     }
+    return string.join("&");
+};
 
+class Api {
     constructor(apiKey, url, type) {
         this.apiKey = apiKey;
         this.url = url;
@@ -16,7 +16,7 @@ class Api {
     }
 
     get(params) {
-        const query = this.convert(params);
+        const query = convert(params);
         const url = query ? `${this.url}?${query}` : this.url;
 
         const options = { headers: { "x-api-key": this.apiKey } };
@@ -27,7 +27,7 @@ class Api {
     }
 
     async getAsync(parameters) {
-        const query = this.convert(parameters);
+        const query = convert(parameters);
         const url = query ? `${this.url}?${query}` : this.url;
 
         const options = { headers: { "x-api-key": this.apiKey } };
@@ -48,6 +48,21 @@ class Api {
     }
 }
 
+class ApiProxy {
+    // eslint-disable-next-line class-methods-use-this
+    get(target, property, receiver) {
+        const value = Reflect.get(target, property, receiver);
+        if (typeof value === "function") {
+            return function trace(...args) {
+                // eslint-disable-next-line no-console
+                console.log(`Api-Call. Type - '${this.type}', Method - '${property}', Parameters - '${JSON.stringify(args)}'.`);
+                return value.apply(this, args);
+            };
+        }
+        return value;
+    }
+}
+
 class ApiFactory {
     static create(apiKey, type) {
         const host = "https://newsapi.org/v2";
@@ -55,11 +70,15 @@ class ApiFactory {
         switch (type) {
         case "sources": {
             const url = `${host}/sources`;
-            return new Api(apiKey, url, "sources");
+            const api = new Api(apiKey, url, "sources");
+            const proxy = new ApiProxy();
+            return new Proxy(api, proxy);
         }
         case "articles": {
             const url = `${host}/everything`;
-            return new Api(apiKey, url, "articles");
+            const api = new Api(apiKey, url, "articles");
+            const proxy = new ApiProxy();
+            return new Proxy(api, proxy);
         }
         default:
             throw new Error(`Factory does not support type '${type}'.`);

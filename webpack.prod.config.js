@@ -7,7 +7,7 @@ const { resolve } = require("path");
 
 module.exports = {
     mode: "production",
-    entry: ["whatwg-fetch", "./src/index.js"],
+    entry: ["whatwg-fetch", "./node_modules/proxy-polyfill/proxy.min.js", "./src/index.js"],
     output: {
         path: resolve(__dirname, "dist"),
         filename: "[name].bundle.js",

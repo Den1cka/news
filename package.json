@@ -38,6 +38,7 @@
     "node-sass": "^4.10.0",
     "postcss-loader": "^3.0.0",
     "precss": "^4.0.0",
+    "proxy-polyfill": "^0.3.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
     "uglifyjs-webpack-plugin": "^2.0.1",
