@@ -1,4 +1,4 @@
-import EventHandler from "./eventhandler.js";
+import EventHandler from "~/shared/eventhandler.js";
 
 class ArticleModel {
     constructor(api, sourceId) {

@@ -1,6 +1,6 @@
-import config from "./config.js";
-import AlertService from "./alert.service.js";
-import ApiFactory from "./api.factory.js";
+import config from "~/shared/config.js";
+import AlertService from "~/shared/alert.service.js";
+import ApiFactory from "~/shared/api.factory.js";
 
 const { apikey } = config;
 
@@ -13,13 +13,13 @@ class SourceController {
             const alertService = new AlertService("alert-container");
             const api = ApiFactory.create(apikey, "articles");
 
-            import(/* webpackChunkName: "article.model" */ "./article.model.js").then(({ default: ArticleModel }) => {
+            import(/* webpackChunkName: "article.model" */ "~/features/article/article.model.js").then(({ default: ArticleModel }) => {
                 const model = new ArticleModel(api, args.id);
 
-                import(/* webpackChunkName: "article.view" */ "./article.view.js").then(({ default: ArticleView }) => {
+                import(/* webpackChunkName: "article.view" */ "~/features/article/article.view.js").then(({ default: ArticleView }) => {
                     const view = new ArticleView(model, "data-container", alertService);
 
-                    import(/* webpackChunkName: "article.controller" */ "./article.controller.js").then(({ default: ArticleController }) => {
+                    import(/* webpackChunkName: "article.controller" */ "~/features/article/article.controller.js").then(({ default: ArticleController }) => {
                         const controller = new ArticleController(model, view);
                         controller.init();
                     });

@@ -1,13 +1,13 @@
 ﻿import "./index.scss";
 import icon from "./home.png";
-import config from "./config.js";
+import config from "./shared/config.js";
 
-import AlertService from "./alert.service.js";
-import ApiFactory from "./api.factory.js";
+import AlertService from "./shared/alert.service.js";
+import ApiFactory from "./shared/api.factory.js";
 
-import SourceModel from "./source.model.js";
-import SourceView from "./source.view.js";
-import SourceController from "./source.controller.js";
+import SourceModel from "./features/source/source.model.js";
+import SourceView from "./features/source/source.view.js";
+import SourceController from "./features/source/source.controller.js";
 
 const { apikey } = config;
 

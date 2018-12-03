@@ -27,7 +27,7 @@ class ArticleView {
         this.articleModel.onGetDefaultAsyncException.attach(() => {
             this.alertService.displayException(this.exceptionMessage);
 
-            import(/* webpackChunkName: "exception.service" */ "./exception.service.js")
+            import(/* webpackChunkName: "exception.service" */ "~/shared/exception/exception.service.js")
                 .then(({ default: ExceptionService }) => {
                     const service = new ExceptionService();
                     service.displayPopup(this.exceptionMessage);

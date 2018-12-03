@@ -1,4 +1,4 @@
-import EventHandler from "./eventhandler.js";
+import EventHandler from "~/shared/eventhandler.js";
 
 class SourceView {
     constructor(sourceModel, datacontainer, alertService) {
@@ -26,7 +26,7 @@ class SourceView {
         this.sourceModel.onGetDefaultException.attach(() => {
             this.alertService.displayException(this.exceptionMessage);
 
-            import(/* webpackChunkName: "exception.service" */ "./exception.service.js")
+            import(/* webpackChunkName: "exception.service" */ "~/shared/exception/exception.service.js")
                 .then(({ default: ExceptionService }) => {
                     const service = new ExceptionService();
                     service.displayPopup(this.exceptionMessage);

@@ -60,4 +60,9 @@ module.exports = {
             chunkFilename: "[name].css",
         }),
     ],
+    resolve: {
+        alias: {
+            "~": resolve(__dirname, "src"),
+        },
+    },
 };
