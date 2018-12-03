@@ -1,24 +1,24 @@
 ﻿import "./index.scss";
 import icon from "./home.png";
+import config from "./shared/config.js";
 
-import SourceComponent from "./source.component.js";
-import config from "./config.js";
+import AlertService from "./shared/alert.service.js";
+import ApiFactory from "./shared/api.factory.js";
+
+import SourceModel from "./features/source/source.model.js";
+import SourceView from "./features/source/source.view.js";
+import SourceController from "./features/source/source.controller.js";
 
 const { apikey } = config;
 
-function loadArticle(sourceId) {
-    import(/* webpackChunkName: "article.component" */ "./article.component.js").then(({ default: ArticleComponent }) => {
-        const article = new ArticleComponent("data-container", "alert-container", apikey, sourceId);
-        article.loadArticlesAsync();
-    });
-}
-
 function loadSource() {
-    const source = new SourceComponent("data-container", "alert-container", apikey);
-    source.onClick = (item) => {
-        loadArticle(item.id);
-    };
-    source.loadSources();
+    const alertService = new AlertService("alert-container");
+    const api = ApiFactory.create(apikey, "sources");
+    const model = new SourceModel(api);
+    const view = new SourceView(model, "data-container", alertService);
+
+    const controller = new SourceController(model, view);
+    controller.init();
 }
 
 const body = document.getElementById("body");

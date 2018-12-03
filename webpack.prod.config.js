@@ -2,11 +2,12 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { resolve } = require("path");
 
 module.exports = {
     mode: "production",
-    entry: ["whatwg-fetch", "./src/index.js"],
+    entry: ["whatwg-fetch", "./node_modules/proxy-polyfill/proxy.min.js", "./src/index.js"],
     output: {
         path: resolve(__dirname, "dist"),
         filename: "[name].bundle.js",
@@ -22,7 +23,7 @@ module.exports = {
             },
             {
                 test: /\.scss$/,
-                use: ["style-loader", "css-loader", {
+                use: [MiniCssExtractPlugin.loader, "css-loader", {
                     loader: "postcss-loader",
                     options: {
                         plugins() {
@@ -54,5 +55,14 @@ module.exports = {
             template: "./src/index.html",
             filename: "../index.html",
         }),
+        new MiniCssExtractPlugin({
+            filename: "[name].css",
+            chunkFilename: "[name].css",
+        }),
     ],
+    resolve: {
+        alias: {
+            "~": resolve(__dirname, "src"),
+        },
+    },
 };
